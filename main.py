@@ -1,16 +1,26 @@
 #mywinecave version 1.0
 
-import tkinter as tk
+import PySimpleGUI as sg
 
-class Window(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("MyWineCave")
+sg.theme('blue 9')
 
-        label = tk.Label(self, text="Hello World!")
-        label.pack(fill=tk.BOTH, expand=1, padx=100, pady=50)
+# Define the window's contents
+layout = [[sg.Text("What's your name?")],
+          [sg.Input(key='-INPUT-')],
+          [sg.Text(size=(40,1), key='-OUTPUT-')],
+          [sg.Button('Ok'), sg.Button('Quit')]]
 
+# Create the window
+window = sg.Window('Window Title', layout)
 
-if __name__ == "__main__":
-    window = Window()
-    window.mainloop()
+# Display and interact with the Window using an Event Loop
+while True:
+    event, values = window.read()
+    # See if user wants to quit or window was closed
+    if event == sg.WINDOW_CLOSED or event == 'Quit':
+        break
+    # Output a message to the window
+    window['-OUTPUT-'].update('Hello ' + values['-INPUT-'] + "! Thanks for trying PySimpleGUI")
+
+# Finish up by removing from the screen
+window.close()
